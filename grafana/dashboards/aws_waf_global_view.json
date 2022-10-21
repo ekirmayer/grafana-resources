@@ -50,8 +50,8 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 11,
-    "iteration": 1666366992135,
+    "id": 12,
+    "iteration": 1666368500093,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -62,6 +62,9 @@
             },
             "fieldConfig": {
                 "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "custom": {
                         "align": "auto",
                         "displayMode": "auto",
@@ -85,7 +88,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 14,
+        "h": 8,
                 "w": 8,
                 "x": 0,
                 "y": 0
@@ -108,9 +111,8 @@
                         "type": "cloudwatch",
                         "uid": "RDbIsp3nz"
                     },
-                    "expression": "fields httpRequest.clientIp\n| stats count(*) as requestCount by httpRequest.clientIp\n| sort requestCount desc\n| limit 100",
+                    "expression": "fields httpRequest.uri\n| stats count(*) as uri by httpRequest.uri\n| limit 100",
                     "id": "",
-                    "key": "Q-97dfb02d-9ee4-4259-8312-53683bf592bd-0",
                     "logGroupNames": [
                         "$wafLogs"
                     ],
@@ -119,11 +121,11 @@
                     "refId": "A",
                     "region": "default",
                     "statsGroups": [
-                        "httpRequest.clientIp"
+                        "httpRequest.uri"
                     ]
                 }
             ],
-            "title": "Top 100 IPs",
+            "title": "Top 100 URIs",
             "transformations": [
                 {
                     "id": "organize",
@@ -131,8 +133,8 @@
                         "excludeByName": {},
                         "indexByName": {},
                         "renameByName": {
-                            "httpRequest.clientIp": "Client IPs",
-                            "requestCount": "Count"
+                            "httpRequest.uri": "URI",
+                            "uri": "Count"
                         }
                     }
                 }
@@ -414,6 +416,90 @@
             ],
             "title": "Request Methods",
             "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "auto",
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 8,
+                "x": 0,
+                "y": 8
+            },
+            "id": 1,
+            "options": {
+                "footer": {
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true
+            },
+            "pluginVersion": "8.5.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "expression": "fields httpRequest.clientIp\n| stats count(*) as requestCount by httpRequest.clientIp\n| sort requestCount desc\n| limit 100",
+                    "id": "",
+                    "key": "Q-97dfb02d-9ee4-4259-8312-53683bf592bd-0",
+                    "logGroupNames": [
+                        "$wafLogs"
+                    ],
+                    "namespace": "",
+                    "queryMode": "Logs",
+                    "refId": "A",
+                    "region": "default",
+                    "statsGroups": [
+                        "httpRequest.clientIp"
+                    ]
+                }
+            ],
+            "title": "Top 100 IPs",
+            "transformations": [
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {},
+                        "indexByName": {},
+                        "renameByName": {
+                            "httpRequest.clientIp": "Client IPs",
+                            "requestCount": "Count"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
         },
         {
             "datasource": {
