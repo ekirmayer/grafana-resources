@@ -1,0 +1,869 @@
+{
+    "__requires": [
+        {
+            "type": "grafana",
+            "id": "grafana",
+            "name": "Grafana",
+            "version": "8.5.1"
+        },
+        {
+            "type": "panel",
+            "id": "geomap",
+            "name": "Geomap",
+            "version": "5.0.0"
+        },
+        {
+            "type": "panel",
+            "id": "graph",
+            "name": "Graph",
+            "version": ""
+        },
+        {
+            "type": "datasource",
+            "id": "cloudwatch",
+            "name": "CloudWatch",
+            "version": "5.0.0"
+        },
+        {
+            "type": "panel",
+            "id": "singlestat",
+            "name": "Singlestat",
+            "version": ""
+        },
+        {
+            "type": "panel",
+            "id": "table",
+            "name": "Table",
+            "version": ""
+        },
+        {
+            "type": "panel",
+            "id": "piechart",
+            "name": "Piechart",
+            "version": ""
+        }
+    ],
+    "annotations": {
+        "list": []
+    },
+    "description": "",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 11,
+    "iteration": 1666366992135,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "auto",
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 14,
+                "w": 8,
+                "x": 0,
+                "y": 0
+            },
+            "id": 1,
+            "options": {
+                "footer": {
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true
+            },
+            "pluginVersion": "8.5.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "expression": "fields httpRequest.clientIp\n| stats count(*) as requestCount by httpRequest.clientIp\n| sort requestCount desc\n| limit 100",
+                    "id": "",
+                    "key": "Q-97dfb02d-9ee4-4259-8312-53683bf592bd-0",
+                    "logGroupNames": [
+                        "$wafLogs"
+                    ],
+                    "namespace": "",
+                    "queryMode": "Logs",
+                    "refId": "A",
+                    "region": "default",
+                    "statsGroups": [
+                        "httpRequest.clientIp"
+                    ]
+                }
+            ],
+            "title": "Top 100 IPs",
+            "transformations": [
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {},
+                        "indexByName": {},
+                        "renameByName": {
+                            "httpRequest.clientIp": "Client IPs",
+                            "requestCount": "Count"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "blue",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 7,
+                "w": 4,
+                "x": 8,
+                "y": 0
+            },
+            "id": 10,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/^Method$/",
+                    "values": true
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "8.5.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "expression": "fields httpRequest\n| stats count() as Method ",
+                    "id": "",
+                    "logGroupNames": [
+                        "$wafLogs"
+                    ],
+                    "namespace": "",
+                    "queryMode": "Logs",
+                    "refId": "A",
+                    "region": "default",
+                    "statsGroups": []
+                }
+            ],
+            "title": "Total Request",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "percentage",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 5
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 15
+                            },
+                            {
+                                "color": "#6ED0E0",
+                                "value": 25
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 14,
+                "w": 12,
+                "x": 12,
+                "y": 0
+            },
+            "id": 3,
+            "options": {
+                "basemap": {
+                    "config": {},
+                    "name": "Layer 0",
+                    "type": "default"
+                },
+                "controls": {
+                    "mouseWheelZoom": true,
+                    "showAttribution": true,
+                    "showDebug": false,
+                    "showScale": false,
+                    "showZoom": true
+                },
+                "layers": [
+                    {
+                        "config": {
+                            "showLegend": true,
+                            "style": {
+                                "color": {
+                                    "field": "requestCount",
+                                    "fixed": "dark-green"
+                                },
+                                "opacity": 0.4,
+                                "rotation": {
+                                    "fixed": 0,
+                                    "max": 360,
+                                    "min": -360,
+                                    "mode": "mod"
+                                },
+                                "size": {
+                                    "fixed": 5,
+                                    "max": 15,
+                                    "min": 2
+                                },
+                                "symbol": {
+                                    "fixed": "img/icons/marker/circle.svg",
+                                    "mode": "fixed"
+                                },
+                                "textConfig": {
+                                    "fontSize": 12,
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                    "textAlign": "center",
+                                    "textBaseline": "middle"
+                                }
+                            }
+                        },
+                        "location": {
+                            "lookup": "httpRequest.country",
+                            "mode": "lookup"
+                        },
+                        "name": "Layer 1",
+                        "tooltip": true,
+                        "type": "markers"
+                    }
+                ],
+                "view": {
+                    "id": "coords",
+                    "lat": 0,
+                    "lon": 13.714183,
+                    "zoom": 0.42
+                }
+            },
+            "pluginVersion": "8.5.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "expression": "fields httpRequest.country\n| stats count(*) as requestCount by httpRequest.country\n| sort requestCount desc\n| limit 100",
+                    "id": "",
+                    "logGroupNames": [
+                        "$wafLogs"
+                    ],
+                    "namespace": "",
+                    "queryMode": "Logs",
+                    "refId": "A",
+                    "region": "default",
+                    "statsGroups": [
+                        "httpRequest.country"
+                    ]
+                }
+            ],
+            "title": "Locations",
+            "type": "geomap"
+        },
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": []
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 7,
+                "w": 4,
+                "x": 8,
+                "y": 7
+            },
+            "id": 5,
+            "options": {
+                "displayLabels": [
+                    "value",
+                    "name"
+                ],
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "values": []
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/^Method$/",
+                    "values": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "expression": "fields httpRequest.httpMethod\n| stats count(*) as Method by httpRequest.httpMethod\n| limit 100",
+                    "id": "",
+                    "logGroupNames": [
+                        "$wafLogs"
+                    ],
+                    "namespace": "",
+                    "queryMode": "Logs",
+                    "refId": "A",
+                    "region": "default",
+                    "statsGroups": [
+                        "httpRequest.httpMethod"
+                    ]
+                }
+            ],
+            "title": "Request Methods",
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "auto",
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "userAgent"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.inspect",
+                                "value": true
+                            },
+                            {
+                                "id": "noValue",
+                                "value": "No User Agent"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 14
+            },
+            "id": 9,
+            "options": {
+                "footer": {
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true
+            },
+            "pluginVersion": "8.5.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "expression": "fields @timestamp, @message\n| parse @message '{\"name\":\"User-Agent\",\"value\":\"*\"}' as userAgent\n| stats count(*) as requestCount by userAgent\n| sort requestCount desc\n| limit 100",
+                    "id": "",
+                    "logGroupNames": [
+                        "$wafLogs"
+                    ],
+                    "namespace": "",
+                    "queryMode": "Logs",
+                    "refId": "A",
+                    "region": "default",
+                    "statsGroups": [
+                        "userAgent"
+                    ]
+                }
+            ],
+            "title": "Top User Agent",
+            "transformations": [
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {},
+                        "indexByName": {},
+                        "renameByName": {
+                            "requestCount": "Count",
+                            "userAgent": "User Agent"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 14
+            },
+            "id": 7,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "alias": "Allowed Requests",
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "dimensions": {
+                        "Region": "$region",
+                        "Rule": "ALL",
+                        "WebACL": "$webAcl"
+                    },
+                    "expression": "",
+                    "hide": false,
+                    "id": "",
+                    "matchExact": true,
+                    "metricEditorMode": 0,
+                    "metricName": "AllowedRequests",
+                    "metricQueryType": 0,
+                    "namespace": "AWS/WAFV2",
+                    "period": "",
+                    "queryMode": "Metrics",
+                    "refId": "A",
+                    "region": "default",
+                    "sql": {
+                        "select": {
+                            "name": "AVG",
+                            "type": "function"
+                        }
+                    },
+                    "sqlExpression": "",
+                    "statistic": "Sum"
+                },
+                {
+                    "alias": "Blocked Requests",
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "dimensions": {
+                        "Region": "$region",
+                        "Rule": "ALL",
+                        "WebACL": "$webAcl"
+                    },
+                    "expression": "",
+                    "hide": false,
+                    "id": "",
+                    "matchExact": true,
+                    "metricEditorMode": 0,
+                    "metricName": "BlockedRequests",
+                    "metricQueryType": 0,
+                    "namespace": "AWS/WAFV2",
+                    "period": "",
+                    "queryMode": "Metrics",
+                    "refId": "B",
+                    "region": "default",
+                    "sqlExpression": "",
+                    "statistic": "Sum"
+                },
+                {
+                    "alias": "Counted Requests",
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "dimensions": {
+                        "Region": "$region",
+                        "Rule": "ALL",
+                        "WebACL": "$webAcl"
+                    },
+                    "expression": "",
+                    "hide": false,
+                    "id": "",
+                    "matchExact": true,
+                    "metricEditorMode": 0,
+                    "metricName": "CountedRequests",
+                    "metricQueryType": 0,
+                    "namespace": "AWS/WAFV2",
+                    "period": "",
+                    "queryMode": "Metrics",
+                    "refId": "C",
+                    "region": "default",
+                    "sqlExpression": "",
+                    "statistic": "Sum"
+                },
+                {
+                    "alias": "Passed Requests",
+                    "datasource": {
+                        "type": "cloudwatch",
+                        "uid": "RDbIsp3nz"
+                    },
+                    "dimensions": {
+                        "Region": "$region",
+                        "Rule": "*",
+                        "WebACL": "$webAcl"
+                    },
+                    "expression": "",
+                    "hide": false,
+                    "id": "",
+                    "matchExact": true,
+                    "metricEditorMode": 0,
+                    "metricName": "PassedRequests",
+                    "metricQueryType": 0,
+                    "namespace": "AWS/WAFV2",
+                    "period": "",
+                    "queryMode": "Metrics",
+                    "refId": "D",
+                    "region": "default",
+                    "sqlExpression": "",
+                    "statistic": "Sum"
+                }
+            ],
+            "title": "Request Count",
+            "transformations": [],
+            "type": "timeseries"
+        }
+    ],
+    "refresh": false,
+    "schemaVersion": 36,
+    "style": "dark",
+    "tags": [
+        "AWS",
+        "WAFv2",
+        "Amazon",
+        "CloudWatch",
+        "Logs"
+    ],
+    "templating": {
+        "list": [
+            {
+                "current": {
+                    "selected": false,
+                    "text": "CloudWatch",
+                    "value": "CloudWatch"
+                },
+                "description": "CloudWatch Datasource to query logs & Metrics",
+                "hide": 0,
+                "includeAll": false,
+                "label": "DataSource",
+                "multi": false,
+                "name": "datasource",
+                "options": [],
+                "query": "cloudwatch",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "type": "datasource"
+            },
+            {
+                "current": {
+                    "selected": true,
+                    "text": "eu-west-1",
+                    "value": "eu-west-1"
+                },
+                "datasource": {
+                    "type": "cloudwatch",
+                    "uid": "${datasource}"
+                },
+                "definition": "",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Region",
+                "multi": false,
+                "name": "region",
+                "options": [],
+                "query": "",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            },
+            {
+                "current": {},
+                "datasource": {
+                    "type": "cloudwatch",
+                    "uid": "${datasource}"
+                },
+                "definition": "",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Environment",
+                "multi": false,
+                "name": "env",
+                "options": [],
+                "query": {
+                    "attributeName": "",
+                    "dimensionFilters": "",
+                    "dimensionKey": "LogGroupName",
+                    "ec2Filters": "",
+                    "instanceID": "",
+                    "metricName": "IncomingLogEvents",
+                    "namespace": "AWS/Logs",
+                    "queryType": "dimensionValues",
+                    "refId": "CloudWatchVariableQueryEditor-VariableQuery",
+                    "region": "",
+                    "resourceType": "",
+                    "tags": ""
+                },
+                "refresh": 1,
+                "regex": "aws-waf-logs-(.*)",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            },
+            {
+                "current": {},
+                "datasource": {
+                    "type": "cloudwatch",
+                    "uid": "${datasource}"
+                },
+                "definition": "",
+                "hide": 0,
+                "includeAll": false,
+                "label": "WAF Log Group",
+                "multi": false,
+                "name": "wafLogs",
+                "options": [],
+                "query": {
+                    "attributeName": "",
+                    "dimensionFilters": "",
+                    "dimensionKey": "LogGroupName",
+                    "ec2Filters": "",
+                    "instanceID": "",
+                    "metricName": "IncomingLogEvents",
+                    "namespace": "AWS/Logs",
+                    "queryType": "dimensionValues",
+                    "refId": "CloudWatchVariableQueryEditor-VariableQuery",
+                    "region": "",
+                    "resourceType": "",
+                    "tags": ""
+                },
+                "refresh": 1,
+                "regex": "aws-waf-logs-$env",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            },
+            {
+                "current": {},
+                "datasource": {
+                    "type": "cloudwatch",
+                    "uid": "${datasource}"
+                },
+                "definition": "",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Web ACL",
+                "multi": false,
+                "name": "webAcl",
+                "options": [],
+                "query": {
+                    "attributeName": "",
+                    "dimensionFilters": "",
+                    "dimensionKey": "WebACL",
+                    "ec2Filters": "",
+                    "instanceID": "",
+                    "metricName": "CountedRequests",
+                    "namespace": "AWS/WAFV2",
+                    "queryType": "dimensionValues",
+                    "refId": "CloudWatchVariableQueryEditor-VariableQuery",
+                    "region": "default",
+                    "resourceType": "",
+                    "tags": ""
+                },
+                "refresh": 1,
+                "regex": "$env-.*",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-6h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "AWS WAF Global Dashboard",
+    "uid": "9X_5d6I4k6Yhg",
+    "version": 2,
+    "weekStart": ""
+}
